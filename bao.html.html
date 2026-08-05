@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1150805 律師費試算程式（含保全程序之版本）</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Microsoft JhengHei", "PingFang TC", "Noto Sans TC", sans-serif;
+    background: #eef1f5; color: #1a1a1a; line-height: 1.7; padding: 12px;
+  }
+  .wrap { max-width: 640px; margin: 0 auto; }
+  header {
+    background: #1f4e79; color: #fff; border-radius: 10px 10px 0 0;
+    padding: 18px 20px;
+  }
+  header h1 { font-size: 1.25rem; }
+  header p { font-size: .85rem; opacity: .9; margin-top: 4px; }
+  .card {
+    background: #fff; padding: 20px; border: 1px solid #d8dee6; border-top: none;
+  }
+  .card:last-of-type { border-radius: 0 0 10px 10px; }
+  h2 {
+    font-size: 1.05rem; color: #1f4e79; border-left: 5px solid #1f4e79;
+    padding-left: 10px; margin: 6px 0 14px;
+  }
+  label { display: block; font-weight: 700; font-size: .95rem; margin-bottom: 4px; }
+  .hint { font-weight: 400; font-size: .8rem; color: #666; }
+  input[type=number], select {
+    width: 100%; padding: 12px; font-size: 1.05rem; border: 1.5px solid #b7c0cc;
+    border-radius: 8px; margin-bottom: 14px; background: #fffef5;
+  }
+  input:focus, select:focus { outline: 2px solid #1f4e79; }
+  .btn {
+    display: block; width: 100%; padding: 15px; font-size: 1.15rem; font-weight: 700;
+    color: #fff; background: #1f4e79; border: none; border-radius: 8px; cursor: pointer;
+  }
+  .btn:active { background: #163a5c; }
+  .btn2 {
+    display: block; width: 100%; padding: 11px; font-size: .95rem; margin-top: 10px;
+    color: #1f4e79; background: #fff; border: 1.5px solid #1f4e79; border-radius: 8px; cursor: pointer;
+  }
+  #result { display: none; }
+  table { width: 100%; border-collapse: collapse; margin: 8px 0 16px; font-size: .95rem; }
+  th, td { border: 1px solid #c6cdd6; padding: 8px 10px; text-align: left; }
+  th { background: #e4ebf3; font-weight: 700; white-space: nowrap; }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  tr.total td { background: #fff3cd; font-weight: 700; font-size: 1.02rem; }
+  .note {
+    background: #f5f7fa; border-left: 4px solid #8ea3bb; padding: 10px 12px;
+    font-size: .85rem; color: #444; border-radius: 4px; margin-top: 6px;
+  }
+  .warn {
+    background: #fdf2f2; border-left: 4px solid #c0392b; padding: 10px 12px;
+    font-size: .85rem; color: #7b241c; border-radius: 4px; margin-top: 10px;
+  }
+  .err { color: #c0392b; font-weight: 700; margin-bottom: 10px; display: none; }
+  footer { text-align: center; font-size: .78rem; color: #888; padding: 16px 4px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>1150805 律師費試算程式（含保全程序之版本）</h1>
+    <p>趙姬投資、寄居蟹管理顧問公司債違約事件　自救會成員專用</p>
+  </header>
+
+  <div class="card">
+    <h2>一、基本資料</h2>
+
+    <label>投資「趙姬投資」之未受償金額（元）
+      <span class="hint">未投資者請填 0。以實際匯出之自有資金扣除已領回款項計算；利息滾入轉投資部分不列入。</span></label>
+    <input type="number" id="amtZ" min="0" step="1" placeholder="例：8000000" inputmode="numeric">
+
+    <label>投資「寄居蟹管理顧問」之未受償金額（元）
+      <span class="hint">未投資者請填 0。</span></label>
+    <input type="number" id="amtJ" min="0" step="1" placeholder="例：0" inputmode="numeric">
+
+    <label>全體委任總人數（人）
+      <span class="hint">刑事酬金依總人數分級均攤，人數愈多每人愈低；請填自救會目前預估之委任人數。</span></label>
+    <input type="number" id="headcount" min="1" step="1" value="100" inputmode="numeric">
+
+    <label>民事委任方案</label>
+    <select id="plan">
+      <option value="A">方案Ａ　標準型（前酬 100%，後酬 16%）</option>
+      <option value="B">方案Ｂ　減負型（前酬 60%，後酬 22%）</option>
+      <option value="C">方案Ｃ　風險共擔型（前酬 30%，後酬 28%）</option>
+    </select>
+
+    <label>列為被告之業務人員／主管人數
+      <span class="hint">自救會初估約 30 至 50 人；不確定者可先填 40。刑事按人頭均攤加價、民事向每位成員加計（依所選方案折計）。</span></label>
+    <input type="number" id="agentCount" min="0" step="1" value="40" inputmode="numeric">
+
+    <h2 style="margin-top:6px">保全程序（假扣押、假處分）參數</h2>
+
+    <label>全體參與保全成員之未受償總金額（元）
+      <span class="hint">保全酬金按債權額比例分攤，須填入全體總額始能計算您的分攤額；請向自救會幹部索取最新統計。</span></label>
+    <input type="number" id="poolTotal" min="1" step="1" placeholder="例：2330000000" inputmode="numeric">
+
+    <label>假扣押／假處分聲請件數
+      <span class="hint">每件 150,000 元。依規劃預設 6 件（趙姬公司、李建成、寄居蟹公司、林佑任、兆基屋管股票假處分、其他）。</span></label>
+    <input type="number" id="applyCount" min="0" step="1" value="6" inputmode="numeric">
+
+    <label>保全執行件數
+      <span class="hint">每件 60,000 元。預設 6 件。</span></label>
+    <input type="number" id="execCount" min="0" step="1" value="6" inputmode="numeric">
+
+    <p class="err" id="err"></p>
+    <button class="btn" onclick="calc()">計算律師費</button>
+    <button class="btn2" onclick="location.reload()">清除重填</button>
+  </div>
+
+  <div class="card" id="result">
+    <h2>二、試算結果</h2>
+    <div id="out"></div>
+    <div class="note">
+      本試算結果均為<b>未稅</b>金額，本所依法開立統一發票，營業稅 5% 外加；表末已併列含稅參考金額。
+      本試算不含裁判費、規費及實支費用，亦不含假扣押擔保金（擔保金為可取回之提存款，非酬金）。
+    </div>
+    <div class="warn">
+      本程式僅供成員初步試算參考，實際酬金以簽署之委任契約及委任時填報並經核對之金額為準。
+      刑事酬金之級距，以刑事告訴狀遞交日之實際委任人數結算，多退少補。
+    </div>
+  </div>
+
+  <footer>呈睿國際法律事務所　02-2388-5789<br>本頁面於您的裝置上直接計算，輸入之金額不會被傳送或儲存。</footer>
+</div>
+
+<script>
+"use strict";
+// ===== 基準版收費參數 =====
+var CRIM_BRACKETS = [[30,35000],[50,30000],[75,26000],[101,23000],[151,20000],[201,18000]];      // [人數下限, 每人酬金]
+var CRIM_MIN_TOTAL = 1800000; // 刑事最低總酬金
+var BASE_SINGLE = 20000;           // 民事基本作業費（單一案件）
+var BASE_DUAL   = 25000;           // 民事基本作業費（兩案，丙組）
+var CIVIL_CAP   = 65000;          // 民事前酬上限（方案Ａ基準，含業務員加價）
+var TIERS = [                      // 累退級距 [上限, 費率]
+  [5000000, 0.0025],
+  [20000000, 0.0015],
+  [50000000, 0.0008],
+  [Infinity, 0.0004]
+];
+var TIER_NAMES = ["500萬元以下部分","逾500萬元至2,000萬元部分","逾2,000萬元至5,000萬元部分","逾5,000萬元部分"];
+var PLANS = { A:{pre:1.0, post:0.16}, B:{pre:0.6, post:0.22}, C:{pre:0.3, post:0.28} };
+var AGENT_TIERS = [[1,2000,2000],[11,3500,3500],[31,5000,5000],[51,6500,6500]]; // [人數下限, 刑事每人加價, 民事每人加價]
+function agentSurcharge(m) {
+  var c = 0, v = 0;
+  if (m > 0) for (var i = 0; i < AGENT_TIERS.length; i++) if (m >= AGENT_TIERS[i][0]) { c = AGENT_TIERS[i][1]; v = AGENT_TIERS[i][2]; }
+  return { crim: c, civil: v };
+}
+var BAO_APPLY = 150000;  // 每件聲請
+var BAO_EXEC  = 60000;  // 每件執行
+
+function fmt(n) { return Math.round(n).toLocaleString("zh-Hant-TW"); }
+
+function crimPerHead(n) {
+  var unit = CRIM_BRACKETS[0][1];
+  for (var i = 0; i < CRIM_BRACKETS.length; i++) {
+    if (n >= CRIM_BRACKETS[i][0]) unit = CRIM_BRACKETS[i][1];
+  }
+  return Math.max(unit, CRIM_MIN_TOTAL / n);
+}
+
+function ratioFee(amount) {
+  var remain = amount, prev = 0, total = 0, rows = [];
+  for (var i = 0; i < TIERS.length; i++) {
+    var cap = TIERS[i][0], rate = TIERS[i][1];
+    var seg = Math.max(0, Math.min(amount, cap) - prev);
+    if (seg > 0) {
+      var fee = seg * rate;
+      total += fee;
+      rows.push([TIER_NAMES[i], seg, rate, fee]);
+    }
+    prev = cap;
+    if (amount <= cap) break;
+  }
+  return { total: total, rows: rows };
+}
+
+function calc() {
+  var err = document.getElementById("err");
+  err.style.display = "none";
+  var z = Number(document.getElementById("amtZ").value || 0);
+  var j = Number(document.getElementById("amtJ").value || 0);
+  var n = Number(document.getElementById("headcount").value || 0);
+  var plan = PLANS[document.getElementById("plan").value];
+
+  if (z < 0 || j < 0 || (z + j) <= 0) {
+    err.textContent = "請至少填寫一家公司之未受償金額（大於 0）。";
+    err.style.display = "block"; return;
+  }
+  if (!n || n < 1) {
+    err.textContent = "請填寫全體委任總人數。";
+    err.style.display = "block"; return;
+  }
+
+  var total = z + j;
+  var dual = (z > 0 && j > 0);
+  var group = dual ? "丙組（兩家均有投資）" : (z > 0 ? "甲組（僅投資趙姬）" : "乙組（僅投資寄居蟹）");
+
+  // 業務人員／主管被告加價
+  var m = Number(document.getElementById("agentCount").value || 0);
+  var ag = agentSurcharge(m);
+  // 刑事
+  var crimEach = crimPerHead(n) + ag.crim;
+  
+  // 民事
+  var baseFee = dual ? BASE_DUAL : BASE_SINGLE;
+  var rf = ratioFee(total);
+  var rawCivil = baseFee + rf.total + ag.civil;
+  var capped = rawCivil > CIVIL_CAP;
+  var civilPre = Math.min(rawCivil, CIVIL_CAP) * plan.pre;
+  var pool = Number(document.getElementById("poolTotal").value || 0);
+  var ac = Number(document.getElementById("applyCount").value || 0);
+  var ec = Number(document.getElementById("execCount").value || 0);
+  if (pool <= 0) {
+    err.textContent = "請填寫全體參與保全成員之未受償總金額（可向自救會幹部索取）。";
+    err.style.display = "block"; return;
+  }
+  if (total > pool) {
+    err.textContent = "您的個人金額大於全體總金額，請確認填寫是否正確。";
+    err.style.display = "block"; return;
+  }
+  var baoTotal = ac * BAO_APPLY + ec * BAO_EXEC;
+  var baoShare = baoTotal * total / pool;
+  var grand = crimEach + civilPre + baoShare;
+  var taxed = grand * 1.05;
+
+  var h = "";
+  h += "<table><tr><th colspan='2'>您的基本資料</th></tr>";
+  h += "<tr><td>組別</td><td class='num'>" + group + "</td></tr>";
+  if (z > 0) h += "<tr><td>趙姬案未受償金額</td><td class='num'>" + fmt(z) + " 元</td></tr>";
+  if (j > 0) h += "<tr><td>寄居蟹案未受償金額</td><td class='num'>" + fmt(j) + " 元</td></tr>";
+  h += "<tr><td>合計被害金額</td><td class='num'>" + fmt(total) + " 元</td></tr></table>";
+
+  h += "<table><tr><th colspan='2'>（一）刑事告訴酬金（依 " + n + " 人級距均攤）</th></tr>";
+  h += "<tr><td>每人刑事基本酬金</td><td class='num'>" + fmt(crimEach - ag.crim) + " 元</td></tr>";
+  if (ag.crim > 0) h += "<tr><td>業務人員被告加價（列名 " + m + " 人之級距）</td><td class='num'>" + fmt(ag.crim) + " 元</td></tr>";
+  h += "<tr><td><b>刑事酬金合計</b></td><td class='num'><b>" + fmt(crimEach) + " 元</b></td></tr>";
+  
+  h += "<tr><td class='hint' colspan='2'>付款：簽約時 60%、刑事告訴狀遞出後 40%。刑事部分依律師倫理規範不收取任何成功報酬。</td></tr></table>";
+
+  h += "<table><tr><th colspan='2'>（二）民事求償前酬</th></tr>";
+  h += "<tr><td>基本作業費（" + (dual ? "同時參與兩案" : "單一案件") + "）</td><td class='num'>" + fmt(baseFee) + " 元</td></tr>";
+  for (var i = 0; i < rf.rows.length; i++) {
+    var r = rf.rows[i];
+    h += "<tr><td>" + r[0] + "　" + fmt(r[1]) + " 元 × " + (r[2]*100).toFixed(1).replace(/\.0$/,"") + "%</td><td class='num'>" + fmt(r[3]) + " 元</td></tr>";
+  }
+  if (ag.civil > 0) h += "<tr><td>業務人員共同被告加價（列名 " + m + " 人之級距）</td><td class='num'>" + fmt(ag.civil) + " 元</td></tr>";
+  if (capped) h += "<tr><td><b>已達民事前酬上限</b>（計算值 " + fmt(rawCivil) + " 元，以上限計）</td><td class='num'><b>" + fmt(CIVIL_CAP) + " 元</b></td></tr>";
+  if (plan.pre < 1) {
+    h += "<tr><td>" + (capped ? "上限 " + fmt(CIVIL_CAP) : "小計 " + fmt(rawCivil)) + " 元 × 前酬係數 " + (plan.pre*100) + "%</td><td class='num'>" + fmt(civilPre) + " 元</td></tr>";
+  }
+  h += "<tr><td><b>民事前酬合計</b></td><td class='num'><b>" + fmt(civilPre) + " 元</b></td></tr>";
+  if (dual) h += "<tr><td class='hint' colspan='2'>兩案合併計算一次、基本作業費僅收一次，不因案件拆分而重複收費。</td></tr>";
+  h += "<tr><td class='hint' colspan='2'>付款：簽約時 40%、提起訴訟時 30%、一審言詞辯論終結時 30%。</td></tr></table>";
+
+  h += "<table><tr><th colspan='2'>（三）保全程序酬金分攤</th></tr>";
+  h += "<tr><td>保全酬金總額（聲請 " + ac + " 件 × 150,000 ＋ 執行 " + ec + " 件 × 60,000）</td><td class='num'>" + fmt(baoTotal) + " 元</td></tr>";
+  h += "<tr><td>您的分攤比例（" + fmt(total) + " ÷ " + fmt(pool) + "）</td><td class='num'>" + (total/pool*100).toFixed(3) + "%</td></tr>";
+  h += "<tr><td><b>您的保全酬金分攤額</b></td><td class='num'><b>" + fmt(baoShare) + " 元</b></td></tr>";
+  h += "<tr><td class='hint' colspan='2'>付款：各該件聲請前一次付清。法院准許保全金額逾 1 億元者，超過部分另按 0.1% 加計（每件上限 30 萬元），本試算未含該加計。</td></tr>";
+  h += "<tr><td class='hint' colspan='2'>擔保金另計：假扣押擔保金實務上約為聲請金額三分之一，提存於法院、案件終結後依法取回，非律師酬金，本試算不含。</td></tr></table>";
+
+  h += "<table><tr class='total'><td>應付律師費合計（未稅、不含後酬）</td><td class='num'>" + fmt(grand) + " 元</td></tr>";
+  h += "<tr><td>含 5% 營業稅之參考金額</td><td class='num'>" + fmt(taxed) + " 元</td></tr></table>";
+
+  h += "<table><tr><th colspan='2'>（後酬說明）</th></tr>";
+  h += "<tr><td>民事後酬比例</td><td class='num'>" + (plan.post*100) + "%</td></tr>";
+  h += "<tr><td class='hint' colspan='2'>後酬以您日後「實際受償金額」× 上開比例計算，於受償時自受償款中扣付，現在無須支付；若最終未能受償，後酬為零。後酬已包含強制執行程序之全部律師作業。</td></tr></table>";
+
+  document.getElementById("out").innerHTML = h;
+  document.getElementById("result").style.display = "block";
+  document.getElementById("result").scrollIntoView({ behavior: "smooth" });
+}
+</script>
+</body>
+</html>
