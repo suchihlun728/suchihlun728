@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<!-- saved from url=(0164)file:///C:/Users/suchi/Downloads/%E5%BE%8B%E5%B8%AB%E9%85%AC%E9%87%91%E8%A9%A6%E7%AE%97%E7%A8%8B%E5%BC%8F_%E5%90%AB%E4%BF%9D%E5%85%A8%E7%A8%8B%E5%BA%8F_1150806.html -->
+<html lang="zh-Hant"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>律師酬金試算｜趙姬・寄居蟹公司債案（含保全程序）</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "標楷體", "DFKai-SB", "Kaiti TC", "PMingLiU", serif; background: #eef1f5; color: #1a1a1a; line-height: 1.7; }
+  .topbar { background: #1d3f6e; color: #fff; padding: 14px 0; border-bottom: 4px solid #b5893a; }
+  .topbar .inner { max-width: 860px; margin: 0 auto; padding: 0 16px; }
+  .topbar h1 { font-size: 21px; letter-spacing: 1px; }
+  .topbar .sub { font-size: 13px; color: #cfd9e8; margin-top: 2px; }
+  .wrap { max-width: 860px; margin: 18px auto 60px; padding: 0 16px; }
+  .card { background: #fff; border: 1px solid #c9d2dd; border-radius: 6px; margin-bottom: 16px; overflow: hidden; }
+  .card h2 { background: #e9eef5; border-bottom: 1px solid #c9d2dd; padding: 9px 14px; font-size: 16px; color: #1d3f6e; }
+  .card .bd { padding: 14px 16px; }
+  .row { display: flex; flex-wrap: wrap; gap: 10px 18px; margin-bottom: 12px; align-items: flex-start; }
+  .field { flex: 1 1 240px; }
+  .field label { display: block; font-weight: bold; font-size: 14.5px; margin-bottom: 4px; }
+  .field input[type=text], .field select { width: 100%; padding: 7px 9px; border: 1px solid #9aa7b8; border-radius: 4px; font-size: 15px; font-family: inherit; }
+  .hint { font-size: 12.5px; color: #7a4a00; background: #fff8e8; border: 1px dashed #d8b25e; border-radius: 4px; padding: 6px 8px; margin-top: 5px; }
+  .hint b { color: #a33; }
+  .radio-group label { font-weight: normal; display: inline-flex; align-items: center; gap: 4px; margin-right: 18px; font-size: 15px; }
+  .btns { text-align: center; margin: 6px 0 2px; }
+  button { font-family: inherit; font-size: 16px; padding: 9px 34px; border-radius: 4px; border: 1px solid #16345c; cursor: pointer; letter-spacing: 3px; }
+  .go { background: #1d3f6e; color: #fff; margin-right: 12px; }
+  .go:hover { background: #2a5391; }
+  .clr { background: #fff; color: #1d3f6e; }
+  table { width: 100%; border-collapse: collapse; font-size: 14.5px; }
+  th, td { border: 1px solid #c9d2dd; padding: 7px 10px; text-align: left; }
+  th { background: #f2f5f9; width: 44%; font-weight: bold; }
+  td.amt { text-align: right; font-variant-numeric: tabular-nums; }
+  .total td { background: #fdf3e3; font-weight: bold; font-size: 16px; }
+  .grand td { background: #1d3f6e; color: #fff; font-weight: bold; font-size: 16.5px; }
+  .note { font-size: 13px; color: #555; margin-top: 8px; }
+  .warn { background: #fdecec; border: 1px solid #e3a6a6; color: #8a1f1f; padding: 8px 10px; border-radius: 4px; font-size: 13.5px; margin-top: 10px; }
+  details { margin-top: 6px; }
+  summary { cursor: pointer; color: #1d3f6e; font-weight: bold; font-size: 14.5px; padding: 4px 0; }
+  .faq p { margin: 6px 0; font-size: 14px; }
+  .faq .q { font-weight: bold; color: #1d3f6e; }
+  #result { display: none; }
+  .seg { font-size: 13px; color: #666; }
+  .foot { text-align: center; font-size: 12.5px; color: #78838f; margin-top: 24px; }
+  @media print { .topbar { -webkit-print-color-adjust: exact; } button { display: none; } }
+</style>
+</head>
+<body>
+<div class="topbar"><div class="inner">
+  <h1>趙姬・寄居蟹公司債案　律師酬金試算（含民事保全程序）</h1>
+  <div class="sub">呈睿國際法律事務所　115年8月6日調整版（依30～50人委任規模重訂；無業務人員被告加價）</div>
+</div></div>
+<div class="wrap">
+
+<div class="card"><h2>一、成員基本資料</h2><div class="bd">
+  <div class="row">
+    <div class="field">
+      <label>組別</label>
+      <select id="grp">
+        <option value="甲">甲　只投資趙姬投資</option>
+        <option value="乙">乙　只投資寄居蟹管理顧問</option>
+        <option value="丙">丙　兩家公司均有投資</option>
+      </select>
+    </div>
+  </div>
+  <div class="row">
+    <div class="field">
+      <label>趙姬公司債　被害金額（新臺幣元）</label>
+      <input type="text" id="amtA" inputmode="numeric" placeholder="例：3,000,000">
+    </div>
+    <div class="field">
+      <label>寄居蟹公司債　被害金額（新臺幣元）</label>
+      <input type="text" id="amtB" inputmode="numeric" placeholder="丙組才需填；甲、乙組擇一填寫">
+    </div>
+  </div>
+  <div class="hint">【金額怎麼填】填「<b>實際匯出之自有資金 － 已實際領回之款項</b>（不論名目為本金或利息，均算領回）」，即未收回之本金。<b>未實現、未收到之利息——不論契約已到期或未到期——請勿填入</b>；以利息滾入轉投資之部分，實務多不計入損害，亦請勿列入。放心：沒拿到的利息不用填，但訴訟上該主張的（約定利息、遲延利息）本所會照主張，不會因為沒填就放棄。</div>
+</div></div>
+
+<div class="card"><h2>二、全體參數（由自救會幹部統一設定）</h2><div class="bd">
+  <div class="row">
+    <div class="field">
+      <label>預估委任總人數（人）</label>
+      <input type="text" id="npeople" value="40">
+      <div class="hint">刑事酬金級距：30～39人每人70,000元；40～49人每人60,000元；50～59人每人55,000元；60人以上每人50,000元。刑事最低總酬金200萬元，不足30人時以200萬元除以人數計收。</div>
+    </div>
+    <div class="field">
+      <label>預估全體被害金額總計（元）</label>
+      <input type="text" id="tdmg" value="90,000,000">
+      <div class="hint">用於估算「民事一審最低總酬金250萬元」之補足分攤，並用於計算保全酬金之個人分攤（按債權額比例）。實際金額以起訴時委任名冊結算，多退少補。</div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="field radio-group">
+      <label style="display:block;font-weight:bold;">民事方案（全體統一擇一）</label>
+      <label><input type="radio" name="plan" value="A" checked="">方案甲　後酬型（後酬＝實際受償金額之10%，強制執行全部包含、不另收費）</label><br>
+      <label><input type="radio" name="plan" value="B">方案乙　無後酬型（無後酬；強制執行每件聲請150,000元、續行執行或參與分配每件60,000元，按債權額比例分攤）</label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="field">
+      <label>保全程序酬金總額（元）</label>
+      <input type="text" id="presTotal" value="1,260,000">
+      <div class="hint">預設＝聲請6件×150,000元＋執行6件×60,000元；實際件數依財產調查結果調整，各件於聲請前始收取。假扣押擔保金（約請求金額三分之一）另計，提存於法院、案件終結後依法取回，非酬金。</div>
+    </div>
+  </div>
+
+  <div class="btns">
+    <button class="go" onclick="calc()">試　算</button>
+    <button class="clr" onclick="reset0()">重新填寫</button>
+  </div>
+</div></div>
+
+<div class="card" id="result"><h2>三、試算結果（未稅）</h2><div class="bd">
+  <table id="rt"></table>
+  <div class="note" id="planNote"></div>
+  <div class="warn">本試算結果僅供參考，不含：刑事審判階段酬金（起訴後另行委任，按偵查酬金之80%／70%／60%）、民事二、三審酬金（按一審前酬之70%／60%）、假扣押擔保金（可取回之提存款，非酬金）、營業稅5%已另列、裁判費規費及各項實支費用。實際應付金額以委任契約及正式結算為準。</div>
+</div></div>
+
+<div class="card"><h2>四、常見問題</h2><div class="bd faq">
+  <p class="q">Q1：被害金額要不要把「還沒拿到的利息」算進去？</p>
+  <p>不用。填「實際匯出的自有資金－已實際領回的款項（本金與利息都算領回）」，也就是未收回的本金。未實現的利息——不管是契約約定但還沒到期的、或到期了但公司沒付的——都不填。當初填給自救會彙整表的「未收回本金」就是正確的數字，直接沿用即可。曾把利息滾入轉投資的部分，形式上變成「本金」，但實務上多不計入損害，也請勿列入。填未收回本金就好；沒拿到的利息不用填，但訴訟上該主張的我們會照主張，不會因為沒填就放棄。</p>
+  <p class="q">Q2：為什麼未實現利息不列入計費基礎？</p>
+  <p>因為律師費口徑跟著民事求償的損害額走。法院實務認定的損害，是以自有資金實際投入之部分扣除已領回款項；公司承諾的利息屬於履行利益，在銀行法非法吸金案件以侵權求償時拿不到，已領的利息甚至還要依損益相抵扣除。若把未實現利息算進被害額，等於就一塊法院不會判給的金額收費，日後對帳必生爭議，故計費基礎與請求基礎採同一口徑。</p>
+  <p class="q">Q3：「最低總酬金補足分攤」是什麼？</p>
+  <p>本所受任民事第一審之最低總前酬為250萬元（兩案合計）。全體成員依級距計算之前酬總額低於250萬元時，差額由全體民事委任成員按各人被害金額比例分攤；委任人數與金額愈多，補足金額愈少、甚至為零。本程式所示為估算值，實際以起訴時委任名冊結算。</p>
+  <p class="q">Q4：方案甲與方案乙如何選？</p>
+  <p>方案甲之10%後酬僅於實際受償時發生、自受償款中扣付，執行階段不必再籌費用，本所與成員利害一致；方案乙保有全部受償款，但執行按件計費，件數多時未必較省。全體須統一採同一方案，由自救會決議。</p>
+  <p class="q">Q5：夫妻或一家人一起委任有沒有優惠？</p>
+  <p>本所對全體成員適用同一收費標準、不個別議價。如自救會經團體決議採行，得適用單一優惠規則：配偶或同一戶籍之直系血親共同委任者，自第二人起每人之民事基本作業費減收5,000元，其餘項目均不打折；是否採行由自救會統一決定，全體一體適用。</p>
+</div></div>
+
+<div class="foot">呈睿國際法律事務所　臺北市中正區衡陽路10號8樓　02-2388-5789<br>本頁面所列均為未稅金額；正式條件以委任契約為準。</div>
+</div>
+
+<script>
+function num(id){ var v=document.getElementById(id).value.replace(/[,，\s]/g,''); var n=parseFloat(v); return isNaN(n)?0:n; }
+function fmt(n){ return Math.round(n).toLocaleString('zh-TW'); }
+function prop(g){
+  var s1=Math.min(g,5000000)*0.01;
+  var s2=Math.max(0,Math.min(g,20000000)-5000000)*0.006;
+  var s3=Math.max(0,Math.min(g,50000000)-20000000)*0.003;
+  var s4=Math.max(0,g-50000000)*0.0015;
+  return {t:Math.round(s1+s2+s3+s4), s:[s1,s2,s3,s4]};
+}
+function crimPP(n){
+  var t; if(n>=60)t=50000; else if(n>=50)t=55000; else if(n>=40)t=60000; else t=70000;
+  return Math.max(t, Math.ceil(2000000/n));
+}
+function calc(){
+  var grp=document.getElementById('grp').value;
+  var a=num('amtA'), b=num('amtB');
+  if(grp==='甲') b=0; if(grp==='乙') a=0;
+  var g=a+b;
+  var n=Math.max(1,Math.round(num('npeople')));
+  var T=Math.max(g,num('tdmg'));
+  var plan=document.querySelector('input[name=plan]:checked').value;
+  if(g<=0){ alert('請先填入被害金額。'); return; }
+  if(grp==='丙' && (a<=0||b<=0)){ alert('丙組請分別填入兩家公司之被害金額。'); return; }
+
+  var base=(grp==='丙')?45000:35000;
+  var pr=prop(g);
+  var raw=Math.min(base+pr.t,250000);
+  var capped=(base+pr.t)>250000;
+
+  // 最低總酬金補足（估算）：以平均被害金額推估全體前酬
+  var avg=T/n;
+  var estPer=Math.min(35000+prop(avg).t,250000);
+  var shortfall=Math.max(0,2500000-estPer*n);
+  var topup=Math.round(shortfall*g/T);
+
+  var crim=crimPP(n);
+  var presT=num('presTotal');
+  var pres=Math.round(presT*g/T);
+  var civil=raw+topup;
+  var total=civil+crim+pres;
+  var tax=Math.round(total*0.05);
+
+  var segNote='比例酬金明細：500萬以下×1.00%＝'+fmt(pr.s[0])+'元';
+  if(pr.s[1]>0) segNote+='；500萬～2,000萬×0.60%＝'+fmt(pr.s[1])+'元';
+  if(pr.s[2]>0) segNote+='；2,000萬～5,000萬×0.30%＝'+fmt(pr.s[2])+'元';
+  if(pr.s[3]>0) segNote+='；逾5,000萬×0.15%＝'+fmt(pr.s[3])+'元';
+
+  var h='';
+  h+='<tr><th>被害金額（'+grp+'組'+(grp==='丙'?'，兩案合併計算一次':'')+'）</th><td class="amt">'+fmt(g)+' 元</td></tr>';
+  h+='<tr><th>民事　基本作業費</th><td class="amt">'+fmt(base)+' 元</td></tr>';
+  h+='<tr><th>民事　累退比例酬金<div class="seg">'+segNote+'</div></th><td class="amt">'+fmt(pr.t)+' 元</td></tr>';
+  if(capped) h+='<tr><th>民事　每人上限套用</th><td class="amt">以 250,000 元計收</td></tr>';
+  h+='<tr><th>民事　最低總酬金補足分攤（估算）<div class="seg">全體前酬未達250萬元時，按被害金額比例分攤差額</div></th><td class="amt">'+fmt(topup)+' 元</td></tr>';
+  h+='<tr class="total"><th>民事一審前酬小計</th><td class="amt">'+fmt(civil)+' 元</td></tr>';
+  h+='<tr><th>刑事偵查階段酬金（'+n+'人，每人）</th><td class="amt">'+fmt(crim)+' 元</td></tr>';
+  h+='<tr><th>保全程序酬金分攤（按債權額比例）<div class="seg">全體保全酬金 '+fmt(presT)+' 元 × 個人金額占比</div></th><td class="amt">'+fmt(pres)+' 元</td></tr>';
+  h+='<tr class="grand"><th>合計（未稅）</th><td class="amt">'+fmt(total)+' 元</td></tr>';
+  h+='<tr><th>營業稅（5%）</th><td class="amt">'+fmt(tax)+' 元</td></tr>';
+  h+='<tr><th>含稅合計</th><td class="amt">'+fmt(total+tax)+' 元</td></tr>';
+  document.getElementById('rt').innerHTML=h;
+
+  var pn;
+  if(plan==='A'){
+    pn='【方案甲】另有後酬：日後<b>實際受償</b>時，按實際受償金額之 <b>10%</b> 自受償款中扣付（未受償則為零）；強制執行程序全部包含、不另收費。付款期程——刑事：簽約60%、遞狀後40%；民事前酬：簽約40%、起訴30%、一審言詞辯論終結30%'+'；保全酬金：各該件聲請前100%'+'。';
+  }else{
+    pn='【方案乙】無後酬，成員保有全部受償款；惟強制執行程序按件另計（每一執行事件150,000元、續行執行或聲明參與分配每件60,000元，按債權額比例分攤；刑事沒收發還作業費每人3,000元）。付款期程——刑事：簽約60%、遞狀後40%；民事前酬：簽約40%、起訴30%、一審言詞辯論終結30%'+'；保全酬金：各該件聲請前100%'+'。';
+  }
+  document.getElementById('planNote').innerHTML=pn;
+  document.getElementById('result').style.display='block';
+  document.getElementById('result').scrollIntoView({behavior:'smooth'});
+}
+function reset0(){
+  document.getElementById('amtA').value='';
+  document.getElementById('amtB').value='';
+  document.getElementById('result').style.display='none';
+}
+['amtA','amtB','npeople','tdmg','presTotal'].forEach(function(id){
+  var el=document.getElementById(id);
+  el.addEventListener('blur',function(){ var v=num(id); if(v>0) el.value=v.toLocaleString('zh-TW'); });
+});
+</script>
+
+
+</body></html>
