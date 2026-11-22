@@ -1,0 +1,46 @@
+name: open-webui-legaltech
+
+services:
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:${OPEN_WEBUI_TAG:-v0.13.4}
+    restart: unless-stopped
+    ports:
+      # 只綁本機：WEBUI_AUTH=false 時任何連得到這個埠的人都是管理員。
+      - "127.0.0.1:${WEBUI_PORT:-3000}:8080"
+    environment:
+      WEBUI_NAME: 台灣法律助理
+      WEBUI_AUTH: "false"
+      ENABLE_OLLAMA_API: "false"
+      DEFAULT_LOCALE: zh-TW
+      # 對話標題、標籤等背景小任務改用便宜的模型；該模型不存在時會自動退回對話所用的模型。
+      TASK_MODEL_EXTERNAL: ${TASK_MODEL:-claude-haiku-5-5}
+    volumes:
+      - open-webui-data:/app/backend/data
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/health', timeout=5)"]
+      interval: 10s
+      timeout: 10s
+      retries: 30
+      start_period: 60s
+
+  # 一次性設定：寫入 Claude 連線、legaltech MCP 連線，並建立「台灣法律助理」模型。
+  # 每次 `docker compose up` 都會重跑，可重複執行（已存在就更新）。
+  setup:
+    image: ghcr.io/open-webui/open-webui:${OPEN_WEBUI_TAG:-v0.13.4}
+    restart: "no"
+    depends_on:
+      open-webui:
+        condition: service_healthy
+    entrypoint: ["python", "/setup/setup.py"]
+    environment:
+      WEBUI_URL: http://open-webui:8080
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:?請先把 .env.example 複製成 .env 並填入 ANTHROPIC_API_KEY}
+      LLM_API_BASE_URL: ${LLM_API_BASE_URL:-https://api.anthropic.com/v1}
+      BASE_MODEL: ${BASE_MODEL:-claude-opus-5-5}
+      MCP_URL: ${MCP_URL:-https://legaltech.org.tw/mcp}
+      WEBUI_PORT: ${WEBUI_PORT:-3000}
+    volumes:
+      - ./setup:/setup:ro
+
+volumes:
+  open-webui-data:
